@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Will you be my Valentine?</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      background: linear-gradient(135deg, #ffffff 0%, #ffe4ec 45%, #f9c9d3 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      padding: 20px;
+    }
+
+    .letter {
+      background: #fffdf9;
+      width: 440px;
+      max-width: 92vw;
+      text-align: center;
+      position: relative;
+      border-radius: 4px;
+      box-shadow: 0 10px 30px rgba(238, 92, 134, 0.25), 0 2px 0 #f6c8d4;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    /* ริมกระดาษหยักแบบซองจดหมาย */
+    .letter::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background:
+        linear-gradient(135deg, transparent 49%, #fffdf9 50%) 0 0/30px 30px,
+        linear-gradient(-135deg, transparent 49%, #fffdf9 50%) 0 0/30px 30px;
+      background-color: #f9c9d3;
+      background-repeat: repeat-x;
+      background-position: bottom;
+      z-index: 2;
+    }
+
+    .stamp {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      width: 46px;
+      height: 56px;
+      background: #f9c9d3;
+      border: 2px dashed #ee5c86;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      z-index: 3;
+      transform: rotate(6deg);
+    }
+
+    .heart-seal {
+      margin-top: 26px;
+      font-size: 46px;
+      color: #ee5c86;
+      animation: bob 2s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes bob {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    .heart {
+      position: absolute;
+      color: #ee5c86;
+      animation: float 3s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    .h1 {
+      top: 70px;
+      left: 40px;
+      font-size: 18px;
+      animation-delay: 0s;
+    }
+
+    .h2 {
+      top: 100px;
+      left: 90px;
+      font-size: 14px;
+      animation-delay: .5s;
+    }
+
+    .h3 {
+      top: 66px;
+      right: 90px;
+      font-size: 20px;
+      animation-delay: 1s;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-10px) scale(1.1);
+      }
+    }
+
+    .body-text {
+      padding: 10px 34px 4px;
+      color: #2b2b3a;
+    }
+
+    .salutation {
+      font-family: 'Brush Script MT', cursive;
+      font-size: 28px;
+      color: #ee5c86;
+      margin: 4px 0 10px;
+    }
+
+    .question {
+      font-size: 17px;
+      line-height: 1.7;
+      border-top: 1px dashed #f0a9bb;
+      border-bottom: 1px dashed #f0a9bb;
+      padding: 14px 0;
+    }
+
+    .signature {
+      font-family: 'Brush Script MT', cursive;
+      font-size: 20px;
+      color: #999;
+      margin-top: 10px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 24px 20px 30px;
+      position: relative;
+      min-height: 90px;
+    }
+
+    button {
+      font-family: 'Brush Script MT', cursive;
+      font-size: 24px;
+      padding: 14px 34px;
+      background: #ee5c86;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.15);
+      transition: transform .15s ease;
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.08);
+    }
+
+    #noBtn {
+      position: relative;
+      background: #fff;
+      color: #ee5c86;
+      border: 2px solid #ee5c86;
+    }
+
+    .result {
+      display: none;
+      padding: 40px 24px;
+      font-size: 20px;
+      color: #2b2b3a;
+      line-height: 1.8;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .buttons.hide,
+    .question.hide,
+    .body-text.hide {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="letter" id="card">
+
+    <div class="stamp">🐰</div>
+
+    <div class="body-text" id="bodyText">
+      <div class="heart h1">💗</div>
+      <div class="heart h2">💗</div>
+      <div class="heart h3">💗</div>
+      <div class="heart-seal">💌</div>
+      <div class="salutation">ถึงคนที่รัก,</div>
+
+      <div class="question" id="question">
+        รักเค้าไหมม?❤️ 😘<br>
+        ตอบหน่อยน้าา…
+      </div>
+
+      <div class="signature">— จากใจกระต่ายน้อย 🐰</div>
+    </div>
+
+    <div class="buttons" id="buttons">
+      <button id="yesBtn">รัก</button>
+      <button id="noBtn">ไม่รัก</button>
+    </div>
+
+    <div class="result" id="result">
+      💌<br>
+      เค้าก็รักกระต่ายอ้วน ฮิ ฮี๊🥰💕
+    </div>
+
+  </div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const buttons = document.getElementById('buttons');
+    const card = document.getElementById('card');
+
+    // ปุ่ม No วิ่งหนีเมื่อเอาเมาส์ไปชี้ หรือแตะบนมือถือ
+    function runAway() {
+      const cardRect = card.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      const maxX = cardRect.width - btnRect.width - 20;
+      const maxY = cardRect.height - btnRect.height - 20;
+
+      const randX = Math.random() * maxX;
+      const randY = Math.random() * maxY;
+
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = randX + 'px';
+      noBtn.style.top = randY + 'px';
+    }
+
+    noBtn.addEventListener('mouseover', runAway);
+    noBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      runAway();
+    });
+    noBtn.addEventListener('touchstart', function (e) {
+      e.preventDefault();
+      runAway();
+    });
+
+    yesBtn.addEventListener('click', function () {
+      document.getElementById('bodyText').classList.add('hide');
+      buttons.classList.add('hide');
+      document.getElementById('result').classList.add('show');
+    });
+  </script>
+
+</body>
+
+</html>
